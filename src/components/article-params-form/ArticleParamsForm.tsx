@@ -13,7 +13,7 @@ import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 interface ParamsForms {
 	ArticleStateType: ArticleStateType;
 	updateStyle: (state:ArticleStateType) => void;
-	resetStyle: (state: ArticleStateType) => void
+	resetStyle: () => void
 }
 
 
@@ -53,7 +53,7 @@ export const ArticleParamsForm = (props: ParamsForms) => {
 
 	function resetValue() {
 		setState(props.ArticleStateType);
-		props.resetStyle(state);
+		props.resetStyle();
 	}
 
 	useOutsideClickClose({

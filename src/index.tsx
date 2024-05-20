@@ -19,7 +19,7 @@ const App = () => {
 		setArticleState(state)
 	}
 
-	const resetStyle = (state:ArticleStateType) => {
+	const resetStyle = () => {
 		setArticleState(defaultArticleState)
 	}
 	
