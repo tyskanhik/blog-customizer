@@ -1,13 +1,13 @@
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
 import styles from './ArticleParamsForm.module.scss';
-import { useState } from 'react';
+import { SyntheticEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Text } from '../text';
 import { Select } from '../select';
 import { ArticleStateType, OptionType, backgroundColors, contentWidthArr, fontColors, fontFamilyOptions, fontSizeOptions } from 'src/constants/articleProps';
 import { RadioGroup } from '../radio-group';
-import { Separator } from '../separator';
+import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 
 interface ParamsForms {
@@ -18,6 +18,7 @@ interface ParamsForms {
 export const ArticleParamsForm = (props: ParamsForms) => {
 	const [isOpen, setOpen] = useState(false)
 	const [state, setState] = useState<ArticleStateType>(props.ArticleStateType)
+	const rootRef = useRef<HTMLDivElement | null>(null)
 
 	const openedForm = () => {
 		setOpen(!isOpen)
@@ -32,7 +33,7 @@ export const ArticleParamsForm = (props: ParamsForms) => {
 	}
 
 	const changeFontColors = (value: OptionType) => {
-		setState({...state, fontColor: value})
+		setState({ ...state, fontColor: value })
 	}
 
 	const changeBackgroundColors = (value: OptionType) => {
@@ -40,28 +41,44 @@ export const ArticleParamsForm = (props: ParamsForms) => {
 	}
 
 	const changeContentWidth = (value: OptionType) => {
-		setState({...state, contentWidth: value})
+		setState({ ...state, contentWidth: value })
 	}
 
+	function handleSubmit(e: SyntheticEvent) {
+		e.preventDefault();
+		console.log(state);
+	}
+
+	function resetValue() {
+		setState(props.ArticleStateType);
+		console.log(state);
+	}
+
+	useOutsideClickClose({
+		isOpen: isOpen,
+		onChange: openedForm,
+		rootRef
+	})
+
 	return (
-		<>
+		<div ref={rootRef}>
 			<ArrowButton onClick={() => openedForm()} isOpen={isOpen} />
 			<aside className={clsx(styles.container, isOpen && styles.container_open)}>
-				<form className={styles.form}>
+				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text weight={800} uppercase={true} size={31}>Задайте параметры</Text>
 					<Select options={fontFamilyOptions} selected={state.fontFamilyOption} title='Шрифт' onChange={changeFontFamily}></Select>
 					<RadioGroup name='font size' options={fontSizeOptions} selected={state.fontSizeOption} title='Размер шрифта' onChange={changeFontSize}></RadioGroup>
 					<Select options={fontColors} selected={state.fontColor} title='Цвет шрифта' onChange={changeFontColors}></Select>
-					<hr/>
+					<hr />
 					<Select options={backgroundColors} selected={state.backgroundColor} title='Цвет фона' onChange={changeBackgroundColors}></Select>
 					<Select options={contentWidthArr} selected={state.contentWidth} title='Ширина контента' onChange={changeContentWidth}></Select>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' type='reset' />
+						<Button title='Сбросить' type='reset' onClick={resetValue} />
 						<Button title='Применить' type='submit' />
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };
 <aside ></aside>
