@@ -12,6 +12,8 @@ import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 interface ParamsForms {
 	ArticleStateType: ArticleStateType;
+	updateStyle: (state:ArticleStateType) => void;
+	resetStyle: (state: ArticleStateType) => void
 }
 
 
@@ -46,12 +48,12 @@ export const ArticleParamsForm = (props: ParamsForms) => {
 
 	function handleSubmit(e: SyntheticEvent) {
 		e.preventDefault();
-		console.log(state);
+		props.updateStyle(state);
 	}
 
 	function resetValue() {
 		setState(props.ArticleStateType);
-		console.log(state);
+		props.resetStyle(state);
 	}
 
 	useOutsideClickClose({
