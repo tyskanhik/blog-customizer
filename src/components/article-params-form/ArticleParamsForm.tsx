@@ -12,7 +12,7 @@ import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 interface ParamsForms {
 	ArticleStateType: ArticleStateType;
-	updateStyle: (state:ArticleStateType) => void;
+	updateStyle: (state: ArticleStateType) => void;
 	resetStyle: () => void
 }
 
