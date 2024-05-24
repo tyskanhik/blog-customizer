@@ -23,10 +23,16 @@
 	padding: 50px 31px;
 	background-color: #ffffff;
 	border-right: 1px solid #000000;
+	gap: 20px;
 }
 
 .bottomContainer {
 	display: flex;
 	justify-content: space-between;
 	margin-top: auto;
+}
+
+hr {
+	border: 1px solid rgba(215, 215, 215, 1);
+	width: 100%;
 }
